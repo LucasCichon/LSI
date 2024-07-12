@@ -3,6 +3,8 @@ using System.Data.SqlClient;
 using Dapper;
 using ExportHistoryLib.Models;
 using ExportHistoryLib.Infrastructure.Filters;
+using ExportHistoryLib.Common;
+using Serilog;
 
 
 namespace ExportHistoryLib.Infrastructure.Repositories
@@ -16,7 +18,7 @@ namespace ExportHistoryLib.Infrastructure.Repositories
             _connectionString = connectionString;
         }
 
-        public async Task<ExportHistoryList> GetExportHistories(DateTime? startDate, DateTime? endDate, string location, Pagination pagination)
+        public async Task<Either<IError, ExportHistoryList>> GetExportHistories(DateTime? startDate, DateTime? endDate, string location, Pagination pagination)
         {
             try
             {
@@ -47,22 +49,28 @@ FETCH NEXT
 SELECT 
     Count(*) 
 FROM 
-    [LSI].[dbo].[ExportHistory]";
+    [LSI].[dbo].[ExportHistory]
+WHERE 
+    (@StartDate IS NULL OR ExportDate >= @StartDate)
+AND 
+    (@EndDate IS NULL OR ExportDate <= @EndDate)
+AND 
+    (@Location IS NULL OR @Location = '' OR LocationName = @Location)";
 
-                    result.TotalCount = await connection.ExecuteScalarAsync<int>(queryTotalCount);
+                    result.TotalCount = await connection.ExecuteScalarAsync<int>(queryTotalCount, new { StartDate = startDate, EndDate = endDate, Location = location });
 
-
-                    return result;
+                    Log.Debug($"GetExportHistories successfully");
+                    return Either<IError, ExportHistoryList>.Success(result);
                 }
             }
             catch (Exception ex)
             {
-                //
+                Log.Error($"GerExportHistories failed with error: {ex.Message}");
+                return Either<IError, ExportHistoryList>.Error(new Error(ex.Message));
             }
-            return new ExportHistoryList();
         }
 
-        public async Task<List<string>> GetLocations()
+        public async Task<Either<IError, List<string>>> GetLocations()
         {
             try
             {
@@ -75,14 +83,15 @@ FROM
     [LSI].[dbo].[ExportHistory]";
 
                     var result = await connection.QueryAsync<string>(query);
-                    return result.ToList();
+                    Log.Debug($"GetLocations successfully");
+                    return Either<IError, List<string>>.Success(result.ToList());
                 }
             }
             catch (Exception ex)
             {
-                //
+                Log.Error($"GetLocations failed with error: {ex.Message}");
+                return Either<IError, List<string>>.Error(new Error(ex.Message));
             }
-            return new List<string>();
         }
     }
 }

@@ -1,11 +1,13 @@
 ﻿using DevExpress.Mvvm.Native;
 using DevExpress.XtraSplashScreen;
 using ExportHistoryLib.Application.Services.Interfaces;
+using ExportHistoryLib.Common;
 using ExportHistoryLib.Infrastructure.Filters;
 using ExportHistoryLib.Models;
 using ExportHistoryViewer.Converters;
 using ExportHistoryViewer.ViewModels;
 using ExportHistoryViewer.Views;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,8 +64,7 @@ namespace ExportHistoryViewer.Presenters
 
         private async Task OnLoad(object sender, EventArgs e)
         {
-            var locations = await _service.GetLocations();
-            _view.SetLocations(locations);
+            await GetLocations();
         }
 
         private void Clear(object sender, EventArgs e)
@@ -94,26 +95,35 @@ namespace ExportHistoryViewer.Presenters
 
         private async Task GetExports()
         {
-           
-            try
+            var exports = await _service.GetExportHistories(_view.StartDate, _view.EndDate, _view.Location, GetPagination());
+            exports.Match(success =>
             {
-                var exports = await _service.GetExportHistories(_view.StartDate, _view.EndDate, _view.Location, GetPagination());
-                var exportView = exports.Items.Select(e => e.ToExportHistoryVm());
+                var exportView = success.Items.Select(e => e.ToExportHistoryVm());
                 _exportHistoryBinding.DataSource = exportView;
-                _view.TotalCount = exports.TotalCount;
+                _view.TotalCount = success.TotalCount;
 
                 _view.SetPagination();
-            }
-            catch (Exception ex)
+            },
+            error =>
             {
                 _view.IsSuccessfull = false;
-                _view.Message = ex.Message;
-            }
+                _view.Message = error.Message;
+            });
         }
 
-        private async Task GetLocations(object sender, EventArgs args)
+        private async Task GetLocations()
         {
-            _view.SetLocations(await _service.GetLocations());
+            var locations = await _service.GetLocations();
+
+            locations.Match(success =>
+            {
+                _view.SetLocations(success);
+            },
+            error =>
+            {
+                _view.IsSuccessfull = false;
+                _view.Message = error.Message;
+            });
         }
 
         private Pagination GetPagination()
