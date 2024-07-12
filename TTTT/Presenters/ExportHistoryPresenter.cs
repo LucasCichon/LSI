@@ -3,16 +3,13 @@ using DevExpress.XtraSplashScreen;
 using ExportHistoryLib.Application.Services.Interfaces;
 using ExportHistoryLib.Common;
 using ExportHistoryLib.Infrastructure.Filters;
-using ExportHistoryLib.Models;
 using ExportHistoryViewer.Converters;
 using ExportHistoryViewer.ViewModels;
 using ExportHistoryViewer.Views;
-using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Forms;
 
 namespace ExportHistoryViewer.Presenters
@@ -95,7 +92,7 @@ namespace ExportHistoryViewer.Presenters
 
         private async Task GetExports()
         {
-            var exports = await _service.GetExportHistories(_view.StartDate, _view.EndDate, _view.Location, GetPagination());
+            var exports = await _service.GetExportHistoriesAsync(_view.StartDate, _view.EndDate, _view.Location, GetPagination());
             exports.Match(success =>
             {
                 var exportView = success.Items.Select(e => e.ToExportHistoryVm());
@@ -113,7 +110,7 @@ namespace ExportHistoryViewer.Presenters
 
         private async Task GetLocations()
         {
-            var locations = await _service.GetLocations();
+            var locations = await _service.GetLocationsAsync();
 
             locations.Match(success =>
             {

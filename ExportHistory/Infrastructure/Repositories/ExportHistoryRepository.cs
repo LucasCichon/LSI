@@ -18,7 +18,7 @@ namespace ExportHistoryLib.Infrastructure.Repositories
             _connectionString = connectionString;
         }
 
-        public async Task<Either<IError, ExportHistoryList>> GetExportHistories(DateTime? startDate, DateTime? endDate, string location, Pagination pagination)
+        public async Task<Either<IError, ExportHistoryList>> GetExportHistoriesAsync(DateTime? startDate, DateTime? endDate, string location, Pagination pagination)
         {
             try
             {
@@ -70,7 +70,7 @@ AND
             }
         }
 
-        public async Task<Either<IError, List<string>>> GetLocations()
+        public async Task<Either<IError, List<string>>> GetLocationsAsync()
         {
             try
             {

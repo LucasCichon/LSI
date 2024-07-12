@@ -15,9 +15,9 @@ namespace ExportHistoryLib.Application.Services
             _repository = repository;
         }
 
-        public async Task<Either<IError, ExportHistoryList>> GetExportHistories(DateTime? startDate, DateTime? endDate, string location, Pagination pagination) => await  _repository.GetExportHistories(startDate, endDate, location, pagination);
+        public async Task<Either<IError, ExportHistoryList>> GetExportHistoriesAsync(DateTime? startDate, DateTime? endDate, string location, Pagination pagination) => await  _repository.GetExportHistoriesAsync(startDate, endDate, location, pagination);
         
 
-        public async Task<Either<IError, List<string>>> GetLocations() => await _repository.GetLocations();
+        public async Task<Either<IError, List<string>>> GetLocationsAsync() => await _repository.GetLocationsAsync();
     }
 }

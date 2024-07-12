@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportHistoryViewer", "TTTT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExportHistoryLib", "ExportHistory\ExportHistoryLib.csproj", "{0032B924-7A86-4B1A-9739-7A273F64586A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportHistoryTests", "ExportHistoryTests\ExportHistoryTests.csproj", "{8D5A3D65-5E60-4D38-9793-7A62EA1CF3AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0032B924-7A86-4B1A-9739-7A273F64586A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0032B924-7A86-4B1A-9739-7A273F64586A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0032B924-7A86-4B1A-9739-7A273F64586A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D5A3D65-5E60-4D38-9793-7A62EA1CF3AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D5A3D65-5E60-4D38-9793-7A62EA1CF3AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D5A3D65-5E60-4D38-9793-7A62EA1CF3AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D5A3D65-5E60-4D38-9793-7A62EA1CF3AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,8 +6,8 @@ namespace ExportHistoryLib.Infrastructure.Interfaces
 {
     public interface IExportHistoryRepository
     {
-        Task<Either<IError, ExportHistoryList>> GetExportHistories(DateTime? startDate, DateTime? endDate, string location, Pagination pagination);
-        Task<Either<IError, List<string>>> GetLocations();
+        Task<Either<IError, ExportHistoryList>> GetExportHistoriesAsync(DateTime? startDate, DateTime? endDate, string location, Pagination pagination);
+        Task<Either<IError, List<string>>> GetLocationsAsync();
 
     }
 }
