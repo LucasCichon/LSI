@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ExportHistory\ExportHistoryLib.csproj" />
-    <ProjectReference Include="..\TTTT\ExportHistoryViewer.csproj" />
   </ItemGroup>
 
   <ItemGroup>

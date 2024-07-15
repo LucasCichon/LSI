@@ -2,6 +2,7 @@
 using DevExpress.XtraSplashScreen;
 using ExportHistoryLib.Application.Services.Interfaces;
 using ExportHistoryLib.Common;
+using ExportHistoryLib.Common.Error;
 using ExportHistoryLib.Infrastructure.Filters;
 using ExportHistoryViewer.Converters;
 using ExportHistoryViewer.ViewModels;
@@ -35,7 +36,7 @@ namespace ExportHistoryViewer.Presenters
 
             _view.SearchEventAsync += SearchExportHistoryAsync;
             _view.ClearEvent += Clear;
-            _view.SeedEventAsync += SeedExportHistory;
+            _view.SeedEventAsync += SeedExportHistoryAsync;
             _view.OnLoad += OnLoad;
             _view.PaginationIncrease += PaginationIncrease;
             _view.PaginationDecrease += PaginationDecrease;
@@ -61,7 +62,7 @@ namespace ExportHistoryViewer.Presenters
 
         private async Task OnLoad(object sender, EventArgs e)
         {
-            await GetLocations();
+            await GetLocationsAsync();
         }
 
         private void Clear(object sender, EventArgs e)
@@ -70,67 +71,93 @@ namespace ExportHistoryViewer.Presenters
             _view.Message = string.Empty;
         }
 
-        private async Task SeedExportHistory(object sender, EventArgs args)
+        private async Task SeedExportHistoryAsync(object sender, EventArgs args)
         {
-            try
-            {
-                await _seedService.SeedExportHistoryData(1000);
-            }
-            catch (Exception ex)
-            {
-                _view.IsSuccessfull = false;
-                _view.Message = ex.Message;
-            }
+            SplashScreenManager.ShowSkinSplashScreen(title: "Czekaj", subtitle: "Trwa zapełnianie testowymi danymi");
+            var test = await _seedService.SeedExportHistoryDataAsync(1000);
+            await test.Match(HandleDbErrorAsync
+            ,() => Task.CompletedTask);
+            await GetLocationsAsync();
+
+            SplashScreenManager.CloseForm();
         }
 
         private async Task SearchExportHistoryAsync(object sender, EventArgs args)
         {
-            SplashScreenManager.ShowForm(typeof(HistoryWaitForm), true, true); 
-            await GetExports();
+            SplashScreenManager.ShowSkinSplashScreen(title: "Czekaj", subtitle: "Trwa pobieranie historii");
+            await GetExportsAsync();
             SplashScreenManager.CloseForm();
         }
 
-        private async Task GetExports()
+        private async Task GetExportsAsync()
         {
             var exports = await _service.GetExportHistoriesAsync(_view.StartDate, _view.EndDate, _view.Location, GetPagination());
-            exports.Match(success =>
+            await exports.Match(async success =>
             {
                 var exportView = success.Items.Select(e => e.ToExportHistoryVm());
                 _exportHistoryBinding.DataSource = exportView;
                 _view.TotalCount = success.TotalCount;
-
                 _view.SetPagination();
+                CheckResult();
             },
-            error =>
-            {
-                _view.IsSuccessfull = false;
-                _view.Message = error.Message;
-            });
+            HandleDbErrorAsync);
         }
 
-        private async Task GetLocations()
+        private void CheckResult()
+        {
+            if(_view.TotalCount == 0) 
+            {
+                MessageBox.Show($"Tabela '{ServiceConstants.ExportHistoryTableName}' jest pusta. Wypełnij tabelę danymi za pomocą przycisku 'Wypełnij testowymi danymi'", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private async Task GetLocationsAsync()
         {
             var locations = await _service.GetLocationsAsync();
 
-            locations.Match(success =>
+            locations.Match(_view.SetLocations
+            ,async error =>
             {
-                _view.SetLocations(success);
-            },
-            error =>
-            {
-                _view.IsSuccessfull = false;
-                _view.Message = error.Message;
+                if (error.Type == ErrorType.DbError_TableNotExists)
+                {
+                    await CreateExportHistoryTableAsync();
+                }
+                else
+                {
+                    _view.IsSuccessfull = false;
+                    _view.Message = error.Message;
+                }
             });
         }
 
-        private Pagination GetPagination()
+        private PaginationFilter GetPagination()
         {
-            var builder = new Pagination.Builder();
+            var builder = new PaginationFilter.Builder();
             builder.SetTake(_view.Take);
             builder.SetSkip(_view.Skip);
 
             return builder.Build();
         }
 
+        private async Task HandleDbErrorAsync(IError error)
+        {
+            if (error.Type == ErrorType.DbError_TableNotExists)
+            {
+                await CreateExportHistoryTableAsync();
+            }
+            else
+            {
+                _view.IsSuccessfull = false;
+                _view.Message = error.Message;
+            }
+        }
+        private async Task CreateExportHistoryTableAsync()
+        {
+            DialogResult dr = MessageBox.Show($"Tabela '{ServiceConstants.ExportHistoryTableName}' nie istnieje w bazie. Czy chcesz utworzyć tabelę?", "Uwaga", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (dr == DialogResult.Yes)
+            {
+                await _service.CreateExportHistoryTableIfNotExistsAsync();
+            }
+        }
     }
 }

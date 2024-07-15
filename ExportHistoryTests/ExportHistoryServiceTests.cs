@@ -1,5 +1,6 @@
 using ExportHistoryLib.Application.Services;
 using ExportHistoryLib.Common;
+using ExportHistoryLib.Common.Error;
 using ExportHistoryLib.Infrastructure.Filters;
 using ExportHistoryLib.Infrastructure.Interfaces;
 using ExportHistoryLib.Models;
@@ -33,12 +34,12 @@ namespace ExportHistoryTests
                 TotalCount = 3
             });
 
-            _mockExportRepository.Setup(s =>  s.GetExportHistoriesAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<Pagination>())).Returns(Task.FromResult(repositoryResult));
+            _mockExportRepository.Setup(s =>  s.GetExportHistoriesAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<PaginationFilter>())).Returns(Task.FromResult(repositoryResult));
 
-            var serviceResult = await _exportHistoryService.GetExportHistoriesAsync(Any.Instance<DateTime>(), Any.Instance<DateTime>(), Any.Instance<string>(), Any.Instance<Pagination>());
+            var serviceResult = await _exportHistoryService.GetExportHistoriesAsync(Any.Instance<DateTime>(), Any.Instance<DateTime>(), Any.Instance<string>(), Any.Instance<PaginationFilter>());
 
 
-            _mockExportRepository.Verify(c => c.GetExportHistoriesAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<Pagination>()), Times.Once);
+            _mockExportRepository.Verify(c => c.GetExportHistoriesAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<PaginationFilter>()), Times.Once);
             _mockExportRepository.Verify(c => c.GetLocationsAsync(), Times.Never);
             Assert.That(repositoryResult, Is.EqualTo(serviceResult));
         }
@@ -48,12 +49,12 @@ namespace ExportHistoryTests
         {
             var repositoryResult = Either<IError, ExportHistoryList>.Error(Any.Instance<IError>());
 
-            _mockExportRepository.Setup(s => s.GetExportHistoriesAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<Pagination>())).Returns(Task.FromResult(repositoryResult));
+            _mockExportRepository.Setup(s => s.GetExportHistoriesAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<PaginationFilter>())).Returns(Task.FromResult(repositoryResult));
 
-            var serviceResult = await _exportHistoryService.GetExportHistoriesAsync(Any.Instance<DateTime>(), Any.Instance<DateTime>(), Any.Instance<string>(), Any.Instance<Pagination>());
+            var serviceResult = await _exportHistoryService.GetExportHistoriesAsync(Any.Instance<DateTime>(), Any.Instance<DateTime>(), Any.Instance<string>(), Any.Instance<PaginationFilter>());
 
 
-            _mockExportRepository.Verify(c => c.GetExportHistoriesAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<Pagination>()), Times.Once);
+            _mockExportRepository.Verify(c => c.GetExportHistoriesAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<PaginationFilter>()), Times.Once);
             Assert.That(serviceResult.IsLeft, Is.True);
         }
 
@@ -67,7 +68,7 @@ namespace ExportHistoryTests
             var serviceResult = await _exportHistoryService.GetLocationsAsync();
 
 
-            _mockExportRepository.Verify(c => c.GetExportHistoriesAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<Pagination>()), Times.Never);
+            _mockExportRepository.Verify(c => c.GetExportHistoriesAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<PaginationFilter>()), Times.Never);
             _mockExportRepository.Verify(c => c.GetLocationsAsync(), Times.Once);
             Assert.That(repositoryResult, Is.EqualTo(serviceResult));
         }
@@ -81,7 +82,7 @@ namespace ExportHistoryTests
 
             var serviceResult = await _exportHistoryService.GetLocationsAsync();
 
-            _mockExportRepository.Verify(c => c.GetExportHistoriesAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<Pagination>()), Times.Never);
+            _mockExportRepository.Verify(c => c.GetExportHistoriesAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<PaginationFilter>()), Times.Never);
             _mockExportRepository.Verify(c => c.GetLocationsAsync(), Times.Once);
             Assert.That(serviceResult.IsLeft, Is.True);
         }

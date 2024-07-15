@@ -1,6 +1,7 @@
 ﻿using DevExpress.XtraEditors;
-
+using ExportHistoryViewer.Configuration;
 using Microsoft.VisualStudio.Threading;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -29,16 +30,23 @@ namespace ExportHistoryViewer.Views
         public new string Location { get => comboBoxEditLocation.Text; set => comboBoxEditLocation.Text = value; }
         public bool IsSuccessfull { get => _isSuccessfull; set => _isSuccessfull = value; }
         public string Message { get => _message; set => _message = value; }
-        public List<string> Locations { 
-            get => _locations; 
-            set { _locations = value;
-                SetLocations(_locations);} 
+        public List<string> Locations
+        {
+            get => _locations;
+            set
+            {
+                _locations = value;
+                SetLocations(_locations);
             }
-        public int Skip { get => _skip; set
+        }
+        public int Skip
+        {
+            get => _skip; set
             {
                 _skip = value;
                 UpdatePaginationButtons();
-            }}
+            }
+        }
         public int Take { get => _take; set => _take = value; }
         public int TotalCount { get => _totalCount; set => _totalCount = value; }
 
@@ -53,6 +61,10 @@ namespace ExportHistoryViewer.Views
             this.Load += async (s, e) =>
             {
                 await OnLoad?.Invoke(this, e);
+                if (IsSuccessfull)
+                {
+                    TryRestoreLayoutFromRegistry();
+                }
             };
             simpleButtonSeedData.Click += async (s, e) =>
             {
@@ -129,7 +141,7 @@ namespace ExportHistoryViewer.Views
             {
                 simpleButtonPrevious.Enabled = true;
             }
-            if(Skip + Take >= _totalCount)
+            if (Skip + Take >= _totalCount)
             {
                 simpleButtonNext.Enabled = false;
             }
@@ -141,9 +153,31 @@ namespace ExportHistoryViewer.Views
 
         public void SetPagination()
         {
-            labelControlPagination.Text = 
-                $"{Skip+1}-{Skip + Take}/ {_totalCount}";
+            labelControlPagination.Text =
+                $"{Skip + 1}-{Skip + Take}/ {_totalCount}";
             UpdatePaginationButtons();
+        }
+
+        public void SaveLayoutToRegistry()
+        {
+            gridView1.SaveLayoutToRegistry(LayoutConfigurationHelper.GetLayoutRegKey(nameof(gridView1)));
+        }
+
+        public void TryRestoreLayoutFromRegistry()
+        {
+            try
+            {
+                gridView1.RestoreLayoutFromRegistry(LayoutConfigurationHelper.GetLayoutRegKey(nameof(gridView1)));
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Could not restore Layouts from Registry. {ex.Message}");
+            }
+        }
+
+        private void MainView_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveLayoutToRegistry();
         }
     }
 }

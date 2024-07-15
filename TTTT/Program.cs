@@ -1,7 +1,6 @@
 ﻿using DevExpress.XtraEditors;
 using ExportHistoryLib.Application.Services;
 using ExportHistoryLib.Application.Services.Interfaces;
-using ExportHistoryLib.Common.ErrorHandling;
 using ExportHistoryLib.Infrastructure.Interfaces;
 using ExportHistoryLib.Infrastructure.Repositories;
 using ExportHistoryViewer.Configuration;
@@ -13,7 +12,7 @@ using System;
 using System.Configuration;
 using System.Windows.Forms;
 
-namespace TTTT
+namespace ExportHistoryApp
 {
     internal static class Program
     {
@@ -46,7 +45,6 @@ namespace TTTT
         {
             var connectionString = ConfigurationManager.ConnectionStrings["ExportHistoryDB"].ConnectionString;
 
-            services.AddTransient<IErrorHandler, ErrorHandler>();
             services.AddSingleton<IExportHistoryRepository>(new ExportHistoryRepository(connectionString));
             services.AddSingleton<ISeedDataRepository>(new SeedDataRepository(connectionString));
             services.AddTransient<IExportHistoryService, ExportHistoryService>();

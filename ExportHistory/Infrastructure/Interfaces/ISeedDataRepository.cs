@@ -1,14 +1,12 @@
-﻿using ExportHistoryLib.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ExportHistoryLib.Common;
+using ExportHistoryLib.Common.Error;
+using ExportHistoryLib.Models;
+
 
 namespace ExportHistoryLib.Infrastructure.Interfaces
 {
     public interface ISeedDataRepository
     {
-        public Task SeedExportHistoryData(List<ExportHistory> seedData);
+        public Task<IOption<IError>> SeedExportHistoryDataAsync(List<ExportHistory> seedData);
     }
 }

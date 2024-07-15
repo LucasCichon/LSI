@@ -114,7 +114,7 @@
             simpleButtonSeedData.Name = "simpleButtonSeedData";
             simpleButtonSeedData.Size = new System.Drawing.Size(225, 51);
             simpleButtonSeedData.TabIndex = 3;
-            simpleButtonSeedData.Text = "SeedData";
+            simpleButtonSeedData.Text = "Wypełnij testowymi danymi";
             // 
             // panelControl1
             // 
@@ -182,6 +182,7 @@
             MinimumSize = new System.Drawing.Size(847, 605);
             Name = "MainView";
             Text = "Raport";
+            FormClosing += MainView_FormClosing;
             ((System.ComponentModel.ISupportInitialize)dateEditStartDate.Properties.CalendarTimeProperties).EndInit();
             ((System.ComponentModel.ISupportInitialize)dateEditStartDate.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)dateEditEndDate.Properties.CalendarTimeProperties).EndInit();

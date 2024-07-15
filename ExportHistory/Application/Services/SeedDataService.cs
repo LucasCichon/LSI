@@ -1,4 +1,6 @@
 ﻿using ExportHistoryLib.Application.Services.Interfaces;
+using ExportHistoryLib.Common;
+using ExportHistoryLib.Common.Error;
 using ExportHistoryLib.Helpers;
 using ExportHistoryLib.Infrastructure.Interfaces;
 
@@ -13,10 +15,10 @@ namespace ExportHistoryLib.Application.Services
         {
             _seedDataRepository = seedDataRepository;
         }
-        public async Task SeedExportHistoryData(int count)
+        public async Task<IOption<IError>> SeedExportHistoryDataAsync(int count)
         {
             var data = SeedDataHelper.GenerateExportHistorySeedData(count);
-            await _seedDataRepository.SeedExportHistoryData(data);
+            return await _seedDataRepository.SeedExportHistoryDataAsync(data);
         }
     }
 }
