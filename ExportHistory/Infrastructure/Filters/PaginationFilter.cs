@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace ExportHistoryLib.Infrastructure.Filters
 {
-    public class Pagination
+    public class PaginationFilter
     {
         private readonly int _take;
         private readonly int _skip;
@@ -14,7 +9,7 @@ namespace ExportHistoryLib.Infrastructure.Filters
         public int Take { get => _take; }
         public int Skip { get => _skip; }
 
-        private Pagination(int take, int skip)
+        private PaginationFilter(int take, int skip)
         {
             _take = take;
             _skip = skip;
@@ -27,9 +22,9 @@ namespace ExportHistoryLib.Infrastructure.Filters
             public void SetTake(int take) { _take = take; }
             public void SetSkip(int skip) { _skip = skip; }
 
-            public Pagination Build()
+            public PaginationFilter Build()
             {
-                return new Pagination(_take, _skip);
+                return new PaginationFilter(_take, _skip);
             }
         }
     }

@@ -29,5 +29,7 @@ namespace ExportHistoryViewer.Views
         void SetExportHistories(BindingSource exportHistories);
         void SetLocations(List<string> locations);
         void SetPagination();
+        void SaveLayoutToRegistry();
+        void TryRestoreLayoutFromRegistry();
     }
 }
