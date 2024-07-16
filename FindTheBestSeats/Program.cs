@@ -1,339 +1,140 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-
-namespace FindTheBestSeats
+﻿namespace test
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-        //    t[,] seats = new t[11, 18]
-        //{
-        //        //x = 18,y = 11
-        //        // 1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18                     
-        //        { t.x, t.x, t.x, t.x, t.x, t.x, t.n, t.n, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f },                    //1
-        //        { t.x, t.x, t.x, t.x, t.x, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f },                    //2
-        //        { t.x, t.x, t.x, t.x, t.x, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f },                    //3
-        //        { t.x, t.x, t.x, t.x, t.x, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f },                    //4
-        //        { t.x, t.x, t.x, t.x, t.x, t.f, t.f, t.f, t.fz, t.fz, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f },                    //5
-        //        { t.f, t.f, t.f, t.x, t.x, t.f, t.f, t.f, t.fz, t.fz, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f },                    //6
-        //        { t.f, t.f, t.f, t.x, t.x, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f },                    //7
-        //        { t.f, t.f, t.f, t.x, t.x, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f },                    //8
-        //        { t.f, t.sl, t.sp, t.x, t.x, t.f, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp },      //9  
-        //        { t.f, t.sl, t.sp, t.x, t.x, t.f, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp },      //10   
-        //        { t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp }   //11       
-        //   //index 0    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17                        
-        //};
-
-
-
-            t[,] seats = new t[11, 18]
-        {
-                //x = 18,y = 11
-                // 1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18                     
-                { t.x, t.x, t.x, t.x, t.x, t.x, t.n, t.n, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f },                    //1
-                { t.x, t.x, t.x, t.x, t.x, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f },                    //2
-                { t.x, t.x, t.x, t.x, t.x, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f },                    //3
-                { t.x, t.x, t.x, t.x, t.x, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f },                    //4
-                { t.x, t.x, t.x, t.x, t.x, t.f, t.f, t.f, t.fz, t.fz, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f },                    //5
-                { t.f, t.f, t.f, t.x, t.x, t.f, t.f, t.f, t.fz, t.fz, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f },                    //6
-                { t.f, t.f, t.f, t.x, t.x, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f },                    //7
-                { t.f, t.f, t.f, t.x, t.x, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f, t.f },                    //8
-                { t.f, t.sl, t.sp, t.x, t.x, t.f, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp },      //9  
-                { t.f, t.sl, t.sp, t.x, t.x, t.f, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp },      //10   
-                { t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp, t.sl, t.sp }   //11       
-           //index 0    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17                        
-        };
-
-            FindTheBestSeats();
-
-
-            int[,] FindTheBestSeats()
+            // Seating is represented in a 2D array
+            // 0  - no seat (non-seating area)
+            // 1  - available seat
+            // -1 - taken seat
+            // 21 - available sofa left seat
+            // 22 - available sofa right seat
+            // -21 - taken sofa left seat
+            // -22 - taken sofa right seat
+            int[,] seating = new int[11, 20]
             {
-                int x = seats.GetLength(1);
-                int y = seats.GetLength(0);
-                Console.WriteLine(x);
-                Console.WriteLine(y);
+            { 0,  0,  0,  0,  0,  0, -1, -1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1 },
+            { 0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1 },
+            { 0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1 },
+            { 0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1 },
+            { 0,  0,  0,  0,  0,  1,  1,  1, -1,  -1,  -1, -1,  1,  1,  1,  1,  1,  1,  1,  1 },
+            { 1,  1,  1,  0,  0,  1,  1,  1,  1, -1,  1,  -1,  1,  1,  1,  1,  1,  1,  1,  1 },
+            { 1,  1,  1,  0,  0,  1,  1,  1,  -1,  1,  1,  -1,  -1,  1,  1,  1,  1,  1,  1,  1 },
+            { 1,  1,  1,  0,  0,  1,  1,  1,  1,  -1,  -1,  -1,  -1,  1,  1,  1,  1,  1,  1,  1 },
+            { 1, 21, 22,  0,  0,  1, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22 },
+            { 1, 21, 22,  0,  0,  1, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22 },
+            {21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22 },
+            };
 
-                bool x_is_event = x % 2 == 0;
-                bool y_is_event = y % 2 == 0;
+            Print2DArray(seating);
 
-                int middle_x = !x_is_event ? x / 2 : x / 2 - 1;
-                int middle_y = !y_is_event ? y / 2 : y / 2 - 1;
+            var bestSeats = FindBestSeats(seating);
 
-                Console.WriteLine($"index x :{middle_x}");
-                Console.WriteLine($"index y: {middle_y}");
-
-                int current_x = middle_x;
-                int current_y = middle_y;
-
-
-                int smallSkip = 0;
-                int longSkip = 0;
-
-                bool thereAreMorePlacesToCheck = true;
-                bool placesFounded = false;
-                if (y_is_event)
-                {
-                    return OnEvenNumberOfRows();
-                }
-                else
-                {
-                    return OnNotEvenNumberOfRows();
-                }
-
-                int[,] OnNotEvenNumberOfRows()
-                {
-                    while (thereAreMorePlacesToCheck && !placesFounded)
-                    {
-                        //Sprawdzenie czy aktualnie sprawdzane miejsca są wolne
-                        int[,] founed = CheckCurrentPlacesRight(seats);
-                        if (founed.Length > 0)
-                        {
-                            return founed;
-                        }
-
-                        //jezeli nie
-                        IncreaseSkips();
-
-                        founed = OneUp();
-                        if (founed.Length > 0)
-                        {
-                            return founed;
-                        }
-
-                        founed = GoRight();
-                        if (founed.Length > 0)
-                        {
-                            return founed;
-                        }
-
-                        founed = GoDown();
-                        if (founed.Length > 0)
-                        {
-                            return founed;
-                        }
-
-                        GoLeft();
-
-                        GoUp(checkDirection.left);
-
-                        GoMiddle(checkDirection.left);
-
-                    }
-                    return new int[0, 0];
-
-
-
-
-                }
-
-                int[,] OnEvenNumberOfRows()
-                {
-                    while (thereAreMorePlacesToCheck && !placesFounded)
-                    {
-                        //Sprawdzenie czy aktualnie sprawdzane miejsca są wolne
-                        int[,] founed = CheckCurrentPlacesRight(seats);
-                        if (founed.Length > 0)
-                        {
-                            return founed;
-                        }
-
-                        //jezeli nie
-                        IncreaseSkips();
-
-                        founed = OneUp();
-                        if (founed.Length > 0)
-                        {
-                            return founed;
-                        }
-
-                        founed = GoRight();
-                        if (founed.Length > 0)
-                        {
-                            return founed;
-                        }
-
-                        founed = GoDown();
-                        if (founed.Length > 0)
-                        {
-                            return founed;
-                        }
-
-                        GoLeft();
-
-                        GoUp(checkDirection.right);
-
-                        GoMiddle(checkDirection.right);
-
-                    }
-                    return new int[0, 0];
-                }
-
-                void IncreaseSkips()
-                {
-                    smallSkip++;
-                    longSkip = smallSkip * 2;
-                }
-
-                int[,] OneUp()
-                {
-                    current_y--;
-                    return CheckCurrentPlacesRight(seats);
-
-                }
-
-                int[,] GoRight()
-                {
-                    for (int i = 0; i < smallSkip; i++)
-                    {
-                        current_x++;
-                        var current =  CheckCurrentPlacesRight(seats);
-                        if (current.Length > 0)
-                        {
-                            return current;
-                        }
-                    }
-                    return new int[0,0];
-                }
-
-                int[,] GoDown()
-                {
-                    for(int i = 0; i < longSkip; i++)
-                    {
-                        current_y++;
-                        var current = CheckCurrentPlacesRight(seats);
-                        if (current.Length > 0)
-                        {
-                            return current;
-                        }
-                    }
-                    return new int[0, 0];
-                }
-
-                int[,] GoLeft()
-                {
-                    for (int i = 0; i < longSkip; i++)
-                    {
-                        current_x--;
-                        if(current_x >= middle_x)
-                        {
-                            var current = CheckCurrentPlacesRight(seats);
-                            if (current.Length > 0)
-                            {
-                                return current;
-                            }
-                        }
-                        if (current_x <= middle_x)
-                        {
-                            var current = CheckCurrentPlacesLeft(seats);
-                            if (current.Length > 0)
-                            {
-                                return current;
-                            }
-                        }
-                    }
-                    return new int[0, 0];
-                }
-
-                int[,] GoUp(checkDirection direction)
-                {
-                    for (int i = 0; i < longSkip; i++)
-                    {
-                        current_y--;
-                        var current = direction == checkDirection.right ? CheckCurrentPlacesRight(seats) : CheckCurrentPlacesLeft(seats); 
-                        if (current.Length > 0)
-                        {
-                            return current;
-                        }
-                    }
-                    return new int[0, 0];
-                }
-
-                int[,] GoMiddle(checkDirection direction)
-                {
-                    for (int i = 0; i < smallSkip; i++)
-                    {
-                        current_x++;
-                        var current = direction == checkDirection.right ? CheckCurrentPlacesRight(seats) : CheckCurrentPlacesLeft(seats);
-                        if (current.Length > 0)
-                        {
-                            return current;
-                        }
-                    }
-                    return new int[0, 0];
-                }
-
-
-                int[,] CheckCurrentPlacesRight(t[,] seats)
-                {
-                    if (seats[current_y, current_x] == t.f && seats[current_y, current_x + 1] == t.f)
-                    {
-                        var result = new int[,]
-                        {
-                        {current_y, current_x },
-                        {current_y, current_x + 1 }
-                        };
-                        Console.WriteLine($"miejsca znalezione! rząd: {result[0, 0] + 1}, miejsca {result[0, 1] + 1} i {result[1, 1] + 1}"); // plus jeden bo rzędy zaczynają się od 
-                        placesFounded = true;
-                        return result;
-                    }
-                    else return new int[0, 0];
-                }
-
-                int[,] CheckCurrentPlacesLeft(t[,] seats)
-                {
-                    if (seats[current_y, current_x] == t.f && seats[current_y, current_x - 1] == t.f)
-                    {
-                        var result = new int[,]
-                        {
-                        {current_y, current_x },
-                        {current_y, current_x - 1 }
-                        };
-                        Console.WriteLine($"miejsca znalezione! rząd: {result[0, 0] + 1}, miejsca {result[0, 1] + 1} i {result[1, 1] + 1}"); // plus jeden bo rzędy zaczynają się od 
-                        placesFounded = true;
-                        return result;
-                    }
-                    else return new int[0, 0];
-                }
-
-                return new int[0, 0];
-
-                
+            if (bestSeats.Item1 != -1 && bestSeats.Item2 != -1)
+            {
+                Console.WriteLine($"The two best seats are: Row {bestSeats.Item3 + 1}, Seat {bestSeats.Item1 + 1} and Row {bestSeats.Item3 + 1}, Seat {bestSeats.Item2 + 1}");
+            }
+            else
+            {
+                Console.WriteLine("No suitable seats found.");
             }
         }
 
-        
+        static Tuple <int, int, int> FindBestSeats(int[,] seating)
+        {
 
-        public enum t
-        {
-            [Display(Name=" x ")]
-            x,
-            [Display(Name=" n ")]
-            n,
-            [Display(Name=" f ")]
-            f,
-            [Display(Name="sl ")]
-            sl,
-            [Display(Name="sp ")]
-            sp,
-            [Display(Name="fz ")]
-            fz,
-            [Display(Name="slz")]
-            slz,
-            [Display(Name="slp")]
-            slp
+            int rowsMaxIndex = seating.GetLength(0) - 1; //10
+            int colMaxIndex = seating.GetLength(1) - 1; //17
+
+            int middleRow = seating.GetLength(0) % 2 != 0 ? seating.GetLength(0) / 2 : seating.GetLength(0) / 2 - 1;
+            int middleCol = seating.GetLength(1) % 2 != 0 ? seating.GetLength(1) / 2 : seating.GetLength(1) / 2 - 1;
+
+            bool found = false;
+
+            
+            var middle = Check(seating, true, true, middleCol, middleRow, out found);
+            if(found) { return middle; }
+
+            for (int i = 1; i <= Math.Max(middleRow, middleCol); i++) // is the offset value
+            {
+                int startY = middleRow - i > 0 ? middleRow - i : 0; //5 + i
+                int startX = middleCol - i > 0 ? middleCol - i : 0; //8 + i
+                int left = i * 2 + 1;
+                int offset = i * 2;
+
+                for (int j = 0; j < left; j++)
+                {
+                    var first = Check(seating, startY <= rowsMaxIndex, startX + j < colMaxIndex, startX + j, startY, out found);
+                    if (found) return first;
+
+                    var second = Check(seating, startY + offset <= rowsMaxIndex, startX + j < colMaxIndex, startX + j, startY + offset, out found);
+                    if (found) return second;
+
+                    if (j > 0)
+                    {
+                        var third = Check(seating, startY + j <= rowsMaxIndex, startX < colMaxIndex, startX, startY + j, out found);
+                        if(found) return third;
+
+                        var fourth = Check(seating, startY + j <= rowsMaxIndex, startX + offset < colMaxIndex, startX + offset, startY + j, out found);
+                        if (found) return fourth;
+                    }
+                }
+            }
+            return Tuple.Create(-1, -1, -1);
         }
-        public enum state
+
+        static Tuple<int, int, int> Check(int [,] seating, bool firstIf, bool secondIf, int x, int y, out bool correct)
         {
-            middle,
-            left,
-            right
+            if(firstIf && secondIf)
+            {
+                correct = true;
+                if (IsSeatAvailable(seating[y, x]) && IsSeatAvailable(seating[y, x + 1]))
+                {
+                    return Tuple.Create(x, x + 1 , y);
+                }
+                else if (IsSofaAvailable(seating[y , x], seating[y, x + 1]))
+                {
+                    return Tuple.Create(x, x + 1, y);
+                }
+            }
+
+            correct = false;
+            return Tuple.Create(-1, -1, -1);
         }
-        public enum checkDirection
+
+        static bool IsSeatAvailable(int seat)
         {
-            left, 
-            right
+            return seat == 1;
+        }
+
+        static bool IsSofaAvailable(int seat1, int seat2)
+        {
+            return seat1 == 21 && seat2 == 22;
+        }
+
+        static void Print2DArray(int[,] array)
+        {
+            int rows = array.GetLength(0);
+            int cols = array.GetLength(1);
+
+            Console.Write("\t");
+            for (int j = 0; j < cols; j++)
+            {
+                Console.Write(j + 1 + ".\t");
+            }
+            Console.WriteLine();
+
+            for (int i = 0; i < rows; i++)
+            {
+                Console.Write(i + 1 + ". \t");
+                for (int j = 0; j < cols; j++)
+                {
+                    Console.Write(array[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
         }
     }
 }
