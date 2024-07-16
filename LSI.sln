@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExportHistoryViewer", "TTTT\ExportHistoryViewer.csproj", "{DA9CD124-563C-4478-B08B-93808776486F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExportHistoryViewer", "ExportHistoryViewer\ExportHistoryViewer.csproj", "{DA9CD124-563C-4478-B08B-93808776486F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExportHistoryLib", "ExportHistory\ExportHistoryLib.csproj", "{0032B924-7A86-4B1A-9739-7A273F64586A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExportHistoryTests", "ExportHistoryTests\ExportHistoryTests.csproj", "{8D5A3D65-5E60-4D38-9793-7A62EA1CF3AF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindTheBestSeats", "test\FindTheBestSeats.csproj", "{AD4F3903-2D00-4E8E-ACEC-8F02E3D6FDCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindTheBestSeats", "FindBestSeats\FindTheBestSeats.csproj", "{AD4F3903-2D00-4E8E-ACEC-8F02E3D6FDCA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
