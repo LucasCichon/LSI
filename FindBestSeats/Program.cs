@@ -44,8 +44,8 @@
         static Tuple <int, int, int> FindBestSeats(int[,] seating)
         {
 
-            int rowsMaxIndex = seating.GetLength(0) - 1; //10
-            int colMaxIndex = seating.GetLength(1) - 1; //17
+            int rowsMaxIndex = seating.GetLength(0) - 1;
+            int colMaxIndex = seating.GetLength(1) - 1;
 
             int middleRow = seating.GetLength(0) % 2 != 0 ? seating.GetLength(0) / 2 : seating.GetLength(0) / 2 - 1;
             int middleCol = seating.GetLength(1) % 2 != 0 ? seating.GetLength(1) / 2 : seating.GetLength(1) / 2 - 1;
@@ -58,10 +58,10 @@
 
 
 
-            for (int i = 1; i <= Math.Max(middleRow, middleCol); i++) // is the offset value
+            for (int i = 1; i <= Math.Max(middleRow, middleCol); i++)
             {
-                int startY = middleRow; //5 + i
-                int startX = middleCol; //8 + i
+                int startY = middleRow; 
+                int startX = middleCol;
 
                 for (int j = 0; j <= i; j++)
                 {
