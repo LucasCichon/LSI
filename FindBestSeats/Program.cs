@@ -63,10 +63,6 @@
                 int startY = middleRow; //5 + i
                 int startX = middleCol; //8 + i
 
-                int crossLeft = middleCol - i;
-                int crossRight = middleCol + i;
-                int crossUp = middleRow - i;
-                int crossDown = middleRow + i;
                 for (int j = 0; j <= i; j++)
                 {
                     //left up
@@ -106,8 +102,6 @@
 
         static Tuple<int, int, int> Check(int [,] seating, bool firstIf, bool secondIf, int x, int y, out bool correct)
         {
-            //seating[y, x] = 5;
-            //Print2DArray(seating);
             if(firstIf && secondIf)
             {
                 correct = true;
