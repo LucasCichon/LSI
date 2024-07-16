@@ -18,10 +18,10 @@
             { 0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1 },
             { 0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1 },
             { 0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1 },
-            { 0,  0,  0,  0,  0,  1,  1,  1, -1,  -1,  -1, -1,  1,  1,  1,  1,  1,  1,  1,  1 },
-            { 1,  1,  1,  0,  0,  1,  1,  1,  1, -1,  1,  -1,  1,  1,  1,  1,  1,  1,  1,  1 },
-            { 1,  1,  1,  0,  0,  1,  1,  1,  -1,  1,  1,  -1,  -1,  1,  1,  1,  1,  1,  1,  1 },
+            { 0,  0,  0,  0,  0,  1,  1,  1,  1,  -1,  -1,  -1,  1,  1,  1,  1,  1,  1,  1,  1 },
+            { 1,  1,  1,  0,  0,  1,  1,  -1,  -1,  -1,  -1,  -1,  1,  1,  1,  1,  1,  1,  1,  1 },
             { 1,  1,  1,  0,  0,  1,  1,  1,  1,  -1,  -1,  -1,  -1,  1,  1,  1,  1,  1,  1,  1 },
+            { 1,  1,  1,  0,  0,  1,  1,  1,  1,  1,  1,  1,  -1,  1,  1,  1,  1,  1,  1,  1 },
             { 1, 21, 22,  0,  0,  1, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22 },
             { 1, 21, 22,  0,  0,  1, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22 },
             {21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22 },
@@ -56,36 +56,58 @@
             var middle = Check(seating, true, true, middleCol, middleRow, out found);
             if(found) { return middle; }
 
+
+
             for (int i = 1; i <= Math.Max(middleRow, middleCol); i++) // is the offset value
             {
-                int startY = middleRow - i > 0 ? middleRow - i : 0; //5 + i
-                int startX = middleCol - i > 0 ? middleCol - i : 0; //8 + i
-                int left = i * 2 + 1;
-                int offset = i * 2;
+                int startY = middleRow; //5 + i
+                int startX = middleCol; //8 + i
 
-                for (int j = 0; j < left; j++)
+                int crossLeft = middleCol - i;
+                int crossRight = middleCol + i;
+                int crossUp = middleRow - i;
+                int crossDown = middleRow + i;
+                for (int j = 0; j <= i; j++)
                 {
-                    var first = Check(seating, startY <= rowsMaxIndex, startX + j < colMaxIndex, startX + j, startY, out found);
-                    if (found) return first;
+                    //left up
+                    var leftUp = Check(seating, startX - i >= 0, startY - j >= 0, startX - i, startY - j, out found);
+                    if (found) return leftUp;
+                    //left down
+                    var leftDown = Check(seating, startX - i >= 0, startY + j >= rowsMaxIndex, startX - i, startY + j, out found);
+                    if (found) return leftDown;
+                    //right up
+                    var rightUp = Check(seating, startX + i <= colMaxIndex, startY - j >= 0, startX + i, startY - j, out found);
+                    if (found) return rightUp;
+                    //right down
+                    var rightDown = Check(seating, startX + i <= colMaxIndex, startY + j <= rowsMaxIndex, startX + i, startY + j, out found);
+                    if (found) return rightDown;
 
-                    var second = Check(seating, startY + offset <= rowsMaxIndex, startX + j < colMaxIndex, startX + j, startY + offset, out found);
-                    if (found) return second;
 
-                    if (j > 0)
+                    if (j < i) //one iteration less
                     {
-                        var third = Check(seating, startY + j <= rowsMaxIndex, startX < colMaxIndex, startX, startY + j, out found);
-                        if(found) return third;
-
-                        var fourth = Check(seating, startY + j <= rowsMaxIndex, startX + offset < colMaxIndex, startX + offset, startY + j, out found);
-                        if (found) return fourth;
+                        //up left
+                        var upLeft = Check(seating, startX - j >= 0, startY - i >= 0, startX - j, startY - i, out found);
+                        if (found) return upLeft;
+                        //up right
+                        var upRight = Check(seating, startX + j <= colMaxIndex, startY - i >= 0, startX + j, startY - i, out found);
+                        if (found) return upRight;
+                        //down left
+                        var downLeft = Check(seating, startX - j >= 0, startY + i <= rowsMaxIndex, startX - j, startY + i, out found);
+                        if (found) return downLeft;
+                        //down right
+                        var downRight = Check(seating, startX + j <= colMaxIndex, startY + i <= rowsMaxIndex, startX + j, startY + i, out found);
+                        if (found) return downRight;
                     }
                 }
             }
+
             return Tuple.Create(-1, -1, -1);
         }
 
         static Tuple<int, int, int> Check(int [,] seating, bool firstIf, bool secondIf, int x, int y, out bool correct)
         {
+            //seating[y, x] = 5;
+            //Print2DArray(seating);
             if(firstIf && secondIf)
             {
                 correct = true;
